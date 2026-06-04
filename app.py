@@ -1,168 +1,279 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import json
 import os
-from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-change-this'
 
-# Store roadmaps in a JSON file (in production, use a database)
-ROADMAPS_FILE = 'roadmaps.json'
+# ============ DATABASE CONFIGURATION ============
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///careerrecipe.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'your_secret_key_change_this'
 
-def load_roadmaps():
-    """Load roadmaps from JSON file"""
-    if os.path.exists(ROADMAPS_FILE):
-        with open(ROADMAPS_FILE, 'r') as f:
-            return json.load(f)
-    return []
+db = SQLAlchemy(app)
 
-def save_roadmaps(roadmaps):
-    """Save roadmaps to JSON file"""
-    with open(ROADMAPS_FILE, 'w') as f:
-        json.dump(roadmaps, f, indent=2)
+# ============ DATABASE MODELS ============
+
+class User(db.Model):
+    """User model for storing user information"""
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False, index=True)
+    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationships
+    roadmaps = db.relationship('Roadmap', backref='author', lazy=True, cascade='all, delete-orphan')
+    helpful_votes = db.relationship('HelpfulVote', backref='user', lazy=True, cascade='all, delete-orphan')
+    
+    def set_password(self, password):
+        """Hash and set password"""
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        """Check if provided password matches hash"""
+        return check_password_hash(self.password_hash, password)
+    
+    def __repr__(self):
+        return f'<User {self.username}>'
+
+
+class Roadmap(db.Model):
+    """Roadmap model for storing career journeys"""
+    __tablename__ = 'roadmaps'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False, index=True)
+    field = db.Column(db.String(120), nullable=False, index=True)
+    duration = db.Column(db.String(100))
+    description = db.Column(db.Text, nullable=False)
+    successes = db.Column(db.Text, nullable=False)
+    challenges = db.Column(db.Text, nullable=False)
+    lessons = db.Column(db.Text, nullable=False)
+    tips = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Foreign key
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    
+    # Relationships
+    helpful_votes = db.relationship('HelpfulVote', backref='roadmap', lazy=True, cascade='all, delete-orphan')
+    comments = db.relationship('Comment', backref='roadmap', lazy=True, cascade='all, delete-orphan')
+    
+    def to_dict(self):
+        """Convert to dictionary"""
+        return {
+            'id': self.id,
+            'title': self.title,
+            'field': self.field,
+            'duration': self.duration,
+            'description': self.description,
+            'successes': self.successes,
+            'challenges': self.challenges,
+            'lessons': self.lessons,
+            'tips': self.tips,
+            'created_at': self.created_at.isoformat(),
+            'helpful': len(self.helpful_votes),
+            'comments_count': len(self.comments)
+        }
+    
+    def __repr__(self):
+        return f'<Roadmap {self.title}>'
+
+
+class HelpfulVote(db.Model):
+    """Model for tracking helpful votes on roadmaps"""
+    __tablename__ = 'helpful_votes'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    roadmap_id = db.Column(db.Integer, db.ForeignKey('roadmaps.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    __table_args__ = (db.UniqueConstraint('user_id', 'roadmap_id', name='unique_vote'),)
+    
+    def __repr__(self):
+        return f'<HelpfulVote user={self.user_id} roadmap={self.roadmap_id}>'
+
+
+class Comment(db.Model):
+    """Model for comments on roadmaps"""
+    __tablename__ = 'comments'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    roadmap_id = db.Column(db.Integer, db.ForeignKey('roadmaps.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Comment {self.id}>'
+
+
+# ============ ROUTES ============
 
 @app.route('/')
 def index():
     """Home page"""
-    roadmaps = load_roadmaps()
-    total_roadmaps = len(roadmaps)
-    total_discussions = sum(len(r.get('discussions', [])) for r in roadmaps)
-    trending = sorted(roadmaps, key=lambda x: x.get('views', 0), reverse=True)[:3]
+    roadmap_count = Roadmap.query.count()
+    return render_template('index.html', count=roadmap_count)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Login route"""
+    if request.method == 'POST':
+        data = request.get_json()
+        user = User.query.filter_by(email=data.get('email')).first()
+        
+        if user and user.check_password(data.get('password')):
+            session['user_id'] = user.id
+            session['username'] = user.username
+            return jsonify({'success': True})
+        
+        return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
     
-    return render_template('index.html', 
-                         total_roadmaps=total_roadmaps,
-                         total_discussions=total_discussions,
-                         trending=trending)
+    return render_template('login.html')
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    """Sign up route"""
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        # Check if user exists
+        if User.query.filter_by(email=data.get('email')).first():
+            return jsonify({'success': False, 'error': 'Email already exists'}), 400
+        
+        # Create new user
+        user = User(
+            username=data.get('username'),
+            email=data.get('email')
+        )
+        user.set_password(data.get('password'))
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        session['user_id'] = user.id
+        session['username'] = user.username
+        
+        return jsonify({'success': True})
+    
+    return render_template('signup.html')
+
+
+@app.route('/logout')
+def logout():
+    """Logout route"""
+    session.clear()
+    return redirect('/')
+
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
-    """Create a new career roadmap"""
+    """Create a new roadmap"""
     if request.method == 'POST':
-        data = request.json
+        data = request.get_json()
         
-        new_roadmap = {
-            'id': len(load_roadmaps()) + 1,
-            'title': data.get('title'),
-            'career_path': data.get('career_path'),
-            'duration_years': data.get('duration_years'),
-            'achievements': data.get('achievements', []),
-            'challenges': data.get('challenges', []),
-            'lessons': data.get('lessons', []),
-            'tips': data.get('tips', []),
-            'created_at': datetime.now().isoformat(),
-            'views': 0,
-            'likes': 0,
-            'discussions': []
-        }
+        roadmap = Roadmap(
+            title=data.get('title'),
+            field=data.get('field'),
+            duration=data.get('duration'),
+            description=data.get('description'),
+            successes=data.get('successes'),
+            challenges=data.get('challenges'),
+            lessons=data.get('lessons'),
+            tips=data.get('tips'),
+            user_id=session.get('user_id')
+        )
         
-        roadmaps = load_roadmaps()
-        roadmaps.append(new_roadmap)
-        save_roadmaps(roadmaps)
+        db.session.add(roadmap)
+        db.session.commit()
         
-        return jsonify({'success': True, 'id': new_roadmap['id']})
+        return jsonify({'success': True, 'id': roadmap.id})
     
     return render_template('create.html')
+
 
 @app.route('/roadmap/<int:roadmap_id>')
 def roadmap(roadmap_id):
     """View a specific roadmap"""
-    roadmaps = load_roadmaps()
-    roadmap = next((r for r in roadmaps if r['id'] == roadmap_id), None)
-    
-    if not roadmap:
-        return "Roadmap not found", 404
-    
-    # Increment view count
-    roadmap['views'] = roadmap.get('views', 0) + 1
-    save_roadmaps(roadmaps)
-    
-    return render_template('roadmap.html', roadmap=roadmap)
+    roadmap_data = Roadmap.query.get_or_404(roadmap_id)
+    return render_template('roadmap.html', roadmap=roadmap_data)
+
 
 @app.route('/api/roadmaps')
-def api_roadmaps():
+def get_roadmaps():
     """Get all roadmaps"""
-    roadmaps = load_roadmaps()
-    return jsonify(roadmaps)
+    roadmaps = Roadmap.query.order_by(Roadmap.created_at.desc()).all()
+    return jsonify([r.to_dict() for r in roadmaps])
 
-@app.route('/api/roadmap/<int:roadmap_id>/like', methods=['POST'])
-def like_roadmap(roadmap_id):
-    """Like a roadmap"""
-    roadmaps = load_roadmaps()
-    roadmap = next((r for r in roadmaps if r['id'] == roadmap_id), None)
-    
-    if roadmap:
-        roadmap['likes'] = roadmap.get('likes', 0) + 1
-        save_roadmaps(roadmaps)
-        return jsonify({'success': True, 'likes': roadmap['likes']})
-    
-    return jsonify({'success': False}), 404
 
-@app.route('/api/roadmap/<int:roadmap_id>/discuss', methods=['POST'])
-def add_discussion(roadmap_id):
-    """Add a discussion comment"""
-    data = request.json
-    roadmaps = load_roadmaps()
-    roadmap = next((r for r in roadmaps if r['id'] == roadmap_id), None)
+@app.route('/api/search')
+def search_roadmaps():
+    """Search roadmaps by field"""
+    query = request.args.get('q', '').lower()
+    roadmaps = Roadmap.query.filter(
+        (Roadmap.field.ilike(f'%{query}%')) | 
+        (Roadmap.title.ilike(f'%{query}%'))
+    ).all()
+    return jsonify([r.to_dict() for r in roadmaps])
+
+
+@app.route('/api/roadmaps/<int:roadmap_id>/helpful', methods=['POST'])
+def mark_helpful(roadmap_id):
+    """Mark a roadmap as helpful"""
+    roadmap = Roadmap.query.get_or_404(roadmap_id)
+    user_id = session.get('user_id')
     
-    if roadmap:
-        discussion = {
-            'id': len(roadmap.get('discussions', [])) + 1,
-            'author': 'Anonymous User',
-            'comment': data.get('comment'),
-            'timestamp': datetime.now().isoformat(),
-            'helpful': 0
-        }
-        
-        if 'discussions' not in roadmap:
-            roadmap['discussions'] = []
-        
-        roadmap['discussions'].append(discussion)
-        save_roadmaps(roadmaps)
-        
-        return jsonify({'success': True, 'discussion': discussion})
+    # Check if user already voted
+    existing_vote = HelpfulVote.query.filter_by(
+        user_id=user_id,
+        roadmap_id=roadmap_id
+    ).first()
     
-    return jsonify({'success': False}), 404
+    if existing_vote:
+        return jsonify({'error': 'Already voted'}), 400
+    
+    vote = HelpfulVote(user_id=user_id, roadmap_id=roadmap_id)
+    db.session.add(vote)
+    db.session.commit()
+    
+    return jsonify({'helpful': len(roadmap.helpful_votes)})
+
+
+@app.route('/community')
+def community():
+    """Community page"""
+    return render_template('community.html')
+
 
 @app.route('/trending')
 def trending():
     """Trending roadmaps page"""
-    roadmaps = load_roadmaps()
-    sorted_roadmaps = sorted(roadmaps, key=lambda x: x.get('views', 0), reverse=True)
-    
-    return render_template('trending.html', roadmaps=sorted_roadmaps)
+    roadmaps = Roadmap.query.outerjoin(HelpfulVote).group_by(Roadmap.id).order_by(
+        db.func.count(HelpfulVote.id).desc()
+    ).limit(10).all()
+    return render_template('trending.html', roadmaps=roadmaps)
 
-@app.route('/community')
-def community():
-    """Community discussions page"""
-    roadmaps = load_roadmaps()
-    all_discussions = []
-    
-    for roadmap in roadmaps:
-        for discussion in roadmap.get('discussions', []):
-            all_discussions.append({
-                'roadmap_title': roadmap['title'],
-                'roadmap_id': roadmap['id'],
-                'discussion': discussion
-            })
-    
-    all_discussions = sorted(all_discussions, 
-                            key=lambda x: x['discussion']['timestamp'], 
-                            reverse=True)
-    
-    return render_template('community.html', discussions=all_discussions)
 
-@app.route('/mentors')
-def mentors():
-    """Mentors and resources page"""
-    return render_template('mentors.html')
+# ============ CREATE DATABASE ============
 
-@app.route('/login')
-def login():
-    """Login page (placeholder)"""
-    return render_template('login.html')
+def init_db():
+    """Initialize database"""
+    with app.app_context():
+        db.create_all()
+        print("✅ Database created successfully!")
+
 
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)
-
-
