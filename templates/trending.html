@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trending - CareerRecipe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -20,7 +22,7 @@
     <section class="trending-section">
         <div class="container">
             <h1>🔥 Trending Roadmaps</h1>
-            <p class="subtitle">Most helpful stories from the community</p>
+            <p class="subtitle">The most helpful and insightful career stories from our community</p>
 
             <div class="trending-grid">
                 {% if roadmaps %}
@@ -29,15 +31,15 @@
                         <div class="trending-rank">{{ loop.index }}</div>
                         <h3>{{ roadmap.title }}</h3>
                         <p class="field">📌 {{ roadmap.field }}</p>
-                        <p class="preview">{{ roadmap.description[:80] }}...</p>
+                        <p class="preview">{{ roadmap.description[:100] }}...</p>
                         <div class="trending-stats">
-                            <span class="helpful">👍 {{ roadmap.helpful }}</span>
-                            <a href="/roadmap/{{ roadmap.id }}" class="btn-small">Read</a>
+                            <span class="helpful">👍 {{ roadmap.helpful }} helpful</span>
+                            <a href="/roadmap/{{ roadmap.id }}" class="btn btn-small">Read</a>
                         </div>
                     </div>
                     {% endfor %}
                 {% else %}
-                    <p>No trending roadmaps yet.</p>
+                    <p style="grid-column: 1/-1; text-align: center; padding: 3rem;">No trending roadmaps yet. <a href="/community" class="btn btn-primary btn-small">Explore Community</a></p>
                 {% endif %}
             </div>
         </div>
