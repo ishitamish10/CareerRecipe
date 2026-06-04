@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CareerRecipe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark) 0%, #2d2d2d 50%, var(--primary) 100%);
+            padding: 20px;
+        }
+
+        .login-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .login-left {
+            color: var(--light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-left h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .login-left p {
+            font-size: 1.2rem;
+            color: #e5e7eb;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .login-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h3 {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-text p {
+            font-size: 0.95rem;
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        .login-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .login-card .subtitle {
+            color: var(--gray-600);
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 0;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--gray);
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--light);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .remember-me label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .login-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            color: var(--gray-400);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            background: var(--light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .login-left {
+                text-align: center;
+            }
+
+            .login-left h1 {
+                font-size: 2.2rem;
+            }
+
+            .login-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 1.5rem;
+            }
+
+            .login-card h2 {
+                font-size: 1.5rem;
+            }
+
+            .login-left h1 {
+                font-size: 1.8rem;
+            }
+
+            .login-left p {
+                font-size: 1rem;
+            }
+
+            .login-features {
+                gap: 1rem;
+            }
+
+            .feature-icon {
+                font-size: 1.5rem;
+            }
+
+            .feature-text p {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🍳 CareerRecipe</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/login">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-wrapper">
+            <div class="login-left">
+                <h1>Welcome Back to CareerRecipe</h1>
+                <p>Continue sharing your career journey and inspiring thousands of professionals worldwide.</p>
+                
+                <div class="login-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">
+                            <h3>100% Anonymous</h3>
+                            <p>Your identity is completely protected</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-text">
+                            <h3>Join the Community</h3>
+                            <p>Connect with thousands of career explorers</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">💡</div>
+                        <div class="feature-text">
+                            <h3>Learn & Grow</h3>
+                            <p>Gain insights from real career stories</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-text">
+                            <h3>Make Better Decisions</h3>
+                            <p>Chart your career path with confidence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-right">
+                <div class="login-card">
+                    <h2>Login</h2>
+                    <p class="subtitle">Sign in to your account</p>
+
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email">📧 Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">🔐 Password</label>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+                            ✨ Login
+                        </button>
+                    </form>
+
+                    <div class="login-footer">
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <div class="divider">or</div>
+
+                    <div class="social-buttons">
+                        <button class="social-btn" title="Google">🔍</button>
+                        <button class="social-btn" title="GitHub">💻</button>
+                        <button class="social-btn" title="LinkedIn">💼</button>
+                    </div>
+
+                    <div class="signup-link">
+                        Don't have an account? <a href="/signup">Sign up here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            try {
+                // For now, just redirect to community
+                // In production, you'd validate against a backend
+                alert('✅ Logged in successfully!');
+                window.location.href = '/community';
+            } catch (error) {
+                alert('❌ Login failed');
+            }
+        });
+
+        // Social button handlers
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Social login coming soon!');
+            });
+        });
+    </script>
+</body>
+</html>
