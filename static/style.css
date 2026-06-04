@@ -1,0 +1,539 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #dc2626;
+    --dark: #000;
+    --light: #fff;
+    --gray: #f3f4f6;
+    --gray-dark: #6b7280;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark);
+    background: var(--light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    background: var(--dark);
+    color: var(--light);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--primary);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--light);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--light);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #1f2937 100%);
+    color: var(--light);
+    padding: 80px 0;
+    text-align: center;
+    border-bottom: 4px solid var(--primary);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #d1d5db;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.btn-primary:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--light);
+    color: var(--dark);
+    border: 2px solid var(--primary);
+}
+
+.btn-secondary:hover {
+    background: var(--gray);
+}
+
+.btn-large {
+    padding: 16px 40px;
+    font-size: 1.1rem;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* Stats Section */
+.stats {
+    padding: 60px 0;
+    background: var(--gray);
+}
+
+.stats .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 2rem;
+    background: var(--light);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--primary);
+}
+
+.stat-card h3 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Features */
+.features {
+    padding: 80px 0;
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.feature {
+    background: var(--gray);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    border-top: 4px solid var(--primary);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature h3 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+/* Form Section */
+.form-section {
+    padding: 60px 0;
+    background: var(--gray);
+}
+
+.form-section h1 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--gray-dark);
+    margin-bottom: 2rem;
+}
+
+.roadmap-form {
+    background: var(--light);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Community Section */
+.community-section {
+    padding: 60px 0;
+    min-height: 70vh;
+}
+
+.community-section h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.search-box {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.search-box input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 20px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.roadmaps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.roadmap-card-preview {
+    background: var(--light);
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.roadmap-card-preview:hover {
+    border-color: var(--primary);
+    box-shadow: 0 8px 16px rgba(220, 38, 38, 0.15);
+    transform: translateY(-4px);
+}
+
+.roadmap-card-preview h3 {
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
+
+.roadmap-card-preview .field {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.roadmap-card-preview .description {
+    color: var(--gray-dark);
+    font-size: 0.95rem;
+    margin-bottom: auto;
+    padding: 1rem 0;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.read-more {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.read-more:hover {
+    gap: 0.5rem;
+}
+
+/* Roadmap Detail */
+.roadmap-detail {
+    padding: 40px 0;
+    min-height: 70vh;
+}
+
+.roadmap-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--primary);
+}
+
+.roadmap-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.roadmap-meta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: var(--primary);
+    color: var(--light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.date, .anonymous {
+    color: var(--gray-dark);
+    font-size: 0.95rem;
+}
+
+.roadmap-content {
+    margin-bottom: 2rem;
+}
+
+.roadmap-card {
+    background: var(--light);
+    border: 2px solid #e5e7eb;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.roadmap-card.success {
+    border-left-color: #10b981;
+    background: #ecfdf5;
+}
+
+.roadmap-card.challenge {
+    border-left-color: #f59e0b;
+    background: #fffbeb;
+}
+
+.roadmap-card h2 {
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.roadmap-card p {
+    line-height: 1.6;
+    color: var(--gray-dark);
+    white-space: pre-wrap;
+}
+
+.roadmap-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Trending Section */
+.trending-section {
+    padding: 60px 0;
+    min-height: 70vh;
+}
+
+.trending-section h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.trending-card {
+    background: linear-gradient(135deg, var(--light) 0%, var(--gray) 100%);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.trending-rank {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    background: var(--primary);
+    color: var(--light);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.trending-card h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.trending-card .field {
+    color: var(--gray-dark);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.trending-card .preview {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.trending-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.helpful {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.btn-small {
+    background: var(--primary);
+    color: var(--light);
+    text-decoration: none;
+}
+
+.btn-small:hover {
+    background: #b91c1c;
+}
+
+/* Footer */
+footer {
+    background: var(--dark);
+    color: var(--light);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 4rem;
+    border-top: 3px solid var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .roadmaps-grid,
+    .trending-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .roadmap-meta {
+        flex-direction: column;
+    }
+
+    .roadmap-actions {
+        flex-direction: column;
+    }
+}
