@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Share Your Roadmap - CareerRecipe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -20,50 +22,50 @@
     <section class="form-section">
         <div class="container">
             <h1>Share Your Career Roadmap</h1>
-            <p class="subtitle">Your identity is completely anonymous. Be honest and help others.</p>
+            <p class="subtitle">Your identity is completely anonymous. Be honest and help thousands of future professionals make better career decisions.</p>
 
             <form class="roadmap-form" id="roadmapForm">
                 <div class="form-group">
-                    <label>Roadmap Title</label>
-                    <input type="text" name="title" placeholder="e.g., From College to Tech PM in 3 Years" required>
+                    <label>📖 Roadmap Title</label>
+                    <input type="text" name="title" placeholder="e.g., From College to Senior Tech PM in 5 Years" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Career Field</label>
-                    <input type="text" name="field" placeholder="e.g., Product Management, Software Engineering, Marketing" required>
+                    <label>🎯 Career Field</label>
+                    <input type="text" name="field" placeholder="e.g., Product Management, Software Engineering, UX Design" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Time Duration</label>
-                    <input type="text" name="duration" placeholder="e.g., 2 years, 5 months">
+                    <label>⏱️ Time Duration</label>
+                    <input type="text" name="duration" placeholder="e.g., 3 years, 6 months">
                 </div>
 
                 <div class="form-group">
-                    <label>Overview</label>
-                    <textarea name="description" placeholder="Briefly describe your journey..." rows="4" required></textarea>
+                    <label>📝 Journey Overview</label>
+                    <textarea name="description" placeholder="Briefly describe your career journey. What was your starting point and where did it lead?" rows="4" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>🎉 Successes & Achievements</label>
-                    <textarea name="successes" placeholder="What went well? What did you accomplish?" rows="4" required></textarea>
+                    <textarea name="successes" placeholder="What went well? What milestones did you achieve? What are you proud of?" rows="5" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>😤 Challenges & Failures</label>
-                    <textarea name="challenges" placeholder="What was difficult? What failed?" rows="4" required></textarea>
+                    <textarea name="challenges" placeholder="What was difficult? What failures did you experience? What didn't work out?" rows="5" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>💡 Key Lessons Learned</label>
-                    <textarea name="lessons" placeholder="What did you learn from this journey?" rows="4" required></textarea>
+                    <textarea name="lessons" placeholder="What did you learn from this journey? What would you do differently?" rows="5" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>🚀 Tips for Others</label>
-                    <textarea name="tips" placeholder="What advice would you give to someone starting this journey?" rows="4" required></textarea>
+                    <textarea name="tips" placeholder="What advice would you give to someone just starting this career journey?" rows="5" required></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-large">Share Your Story</button>
+                <button type="submit" class="btn btn-primary btn-large">✨ Share Your Story</button>
             </form>
         </div>
     </section>
