@@ -6,6 +6,7 @@ Features:
   2. Share career journeys anonymously
   3. Discuss successes, failures, and lessons learned
   4. Help future students make informed decisions
+
 Career Roadmaps:
   1. Artificial Intelligence
   2. Robotics
@@ -14,20 +15,3 @@ Career Roadmaps:
   5. Cybersecurity
   6. Data Science
   7. Entrepreneurship
-Modern UI:
-  1. Black, white, and red design theme
-  2. Responsive layout
-  3. Startup-inspired user experience
-Tech Stack: 
-  Frontend:
-    1. HTML5
-    2. CSS3
-    3. JavaScript
-  Backend:
-    1. Python
-    2. Flask
-    3. Database
-    4. SQLite
-  Version Control:
-    - Git
-    - GitHub
