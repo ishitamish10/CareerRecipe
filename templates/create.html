@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Share Your Roadmap - CareerRecipe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🍳 CareerRecipe</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/create">Share Roadmap</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/trending">Trending</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="form-section">
+        <div class="container">
+            <h1>Share Your Career Roadmap</h1>
+            <p class="subtitle">Your identity is completely anonymous. Be honest and help others.</p>
+
+            <form class="roadmap-form" id="roadmapForm">
+                <div class="form-group">
+                    <label>Roadmap Title</label>
+                    <input type="text" name="title" placeholder="e.g., From College to Tech PM in 3 Years" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Career Field</label>
+                    <input type="text" name="field" placeholder="e.g., Product Management, Software Engineering, Marketing" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Time Duration</label>
+                    <input type="text" name="duration" placeholder="e.g., 2 years, 5 months">
+                </div>
+
+                <div class="form-group">
+                    <label>Overview</label>
+                    <textarea name="description" placeholder="Briefly describe your journey..." rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>🎉 Successes & Achievements</label>
+                    <textarea name="successes" placeholder="What went well? What did you accomplish?" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>😤 Challenges & Failures</label>
+                    <textarea name="challenges" placeholder="What was difficult? What failed?" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>💡 Key Lessons Learned</label>
+                    <textarea name="lessons" placeholder="What did you learn from this journey?" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>🚀 Tips for Others</label>
+                    <textarea name="tips" placeholder="What advice would you give to someone starting this journey?" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large">Share Your Story</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 CareerRecipe. Your stories, anonymous and impactful.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.getElementById('roadmapForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch('/create', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    alert('✅ Thank you for sharing! Your roadmap is now live.');
+                    window.location.href = '/community';
+                }
+            } catch (error) {
+                alert('Error submitting form');
+            }
+        });
+    </script>
+</body>
+</html>
