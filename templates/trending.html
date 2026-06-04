@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trending - CareerRecipe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🍳 CareerRecipe</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/create">Share Roadmap</a></li>
+                <li><a href="/community">Community</a></li>
+                <li><a href="/trending">Trending</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="trending-section">
+        <div class="container">
+            <h1>🔥 Trending Roadmaps</h1>
+            <p class="subtitle">Most helpful stories from the community</p>
+
+            <div class="trending-grid">
+                {% if roadmaps %}
+                    {% for roadmap in roadmaps %}
+                    <div class="trending-card">
+                        <div class="trending-rank">{{ loop.index }}</div>
+                        <h3>{{ roadmap.title }}</h3>
+                        <p class="field">📌 {{ roadmap.field }}</p>
+                        <p class="preview">{{ roadmap.description[:80] }}...</p>
+                        <div class="trending-stats">
+                            <span class="helpful">👍 {{ roadmap.helpful }}</span>
+                            <a href="/roadmap/{{ roadmap.id }}" class="btn-small">Read</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No trending roadmaps yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 CareerRecipe. Most valuable career stories.</p>
+    </footer>
+</body>
+</html>
