@@ -1,11 +1,9 @@
 # 🚀 CareerConnect
 ### Learn From Real Career Journeys, Not Just Career Advice
 
-![CareerConnect Banner](https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200)
+![CareerConnect Banner](images/careerconnect-images/banner.jpg)
 
 🌍 **CareerConnect** is a global platform that connects students with professionals across industries, helping them discover authentic career journeys and make informed decisions about their future.
-
-Instead of relying on generic advice, students can learn directly from professionals who have successfully navigated the paths they aspire to follow.
 
 > 💡 *"Your future becomes clearer when you learn from someone who has already walked the path."*
 
@@ -13,23 +11,13 @@ Instead of relying on generic advice, students can learn directly from professio
 
 # 🎯 Why CareerConnect?
 
-Students often struggle with:
-
-❌ Lack of practical career guidance  
-❌ Uncertainty about educational choices  
-❌ Limited access to industry professionals  
-❌ Unrealistic expectations about careers  
-❌ Difficulty understanding required skills and certifications
-
-CareerConnect bridges this gap by providing transparent and experience-driven career guidance.
+CareerConnect bridges the gap between students and experienced professionals through transparent career roadmaps.
 
 ---
 
 # ✨ Core Features
 
 ## 🕶️ Anonymous Career Roadmap Sharing
-
-Professionals can anonymously share:
 
 - 🎓 Educational Background
 - 📚 Certifications & Courses
@@ -38,9 +26,6 @@ Professionals can anonymously share:
 - ⚠️ Failures & Lessons Learned
 - 🏆 Success Stories
 - 💰 Salary Growth (Optional)
-- 💡 Industry Insights
-
-This encourages honesty and transparency while protecting privacy.
 
 ---
 
@@ -50,15 +35,12 @@ Students can:
 
 - Ask career-related questions
 - Discuss industry trends
-- Learn about day-to-day responsibilities
-- Seek advice on certifications and learning paths
-- Understand interview preparation strategies
+- Learn from professionals
+- Explore practical career advice
 
 ---
 
 ## 🗺️ Visual Career Roadmaps
-
-Every roadmap follows a structured progression:
 
 ```text
 🎓 Education
@@ -73,25 +55,12 @@ Every roadmap follows a structured progression:
       ↓
 📈 Career Growth
       ↓
-🏆 Leadership / Expertise
+🏆 Leadership
 ```
 
 ---
 
-## 🔍 Smart Search & Discovery
-
-Search roadmaps by:
-
-- 🌎 Country
-- 🏢 Industry
-- 🎓 Education Level
-- 🛠️ Skills
-- 📈 Experience
-- 💰 Salary Range
-
----
-
-## 🤖 AI-Powered Career Assistant
+## 🤖 AI Career Assistant
 
 Receive personalized recommendations for:
 
@@ -99,17 +68,14 @@ Receive personalized recommendations for:
 - 🏅 Certifications
 - 🎯 Skills
 - 🧑‍🏫 Mentors
-- 🗺️ Career Paths
 
 ---
 
 # 🌟 Career Categories
 
----
-
 ## 🧠 Artificial Intelligence
 
-![Artificial Intelligence](https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1000)
+![Artificial Intelligence](images/careerconnect-images/ai.jpg)
 
 ### Career Paths
 
@@ -127,7 +93,7 @@ Receive personalized recommendations for:
 
 ## 🤖 Robotics
 
-![Robotics](https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1000)
+![Robotics](images/careerconnect-images/robotics.jpg)
 
 ### Career Paths
 
@@ -138,13 +104,13 @@ Receive personalized recommendations for:
 
 ### Typical Journey
 
-🎓 Engineering → 🔧 Electronics → 🤖 Robotics Projects → 🚀 Robotics Engineer
+🎓 Engineering → 🔧 Electronics → 🤖 Projects → 🚀 Robotics Engineer
 
 ---
 
 ## 💻 Software Engineering
 
-![Software Engineering](https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1000)
+![Software Engineering](images/careerconnect-images/software-engineering.jpg)
 
 ### Career Paths
 
@@ -162,7 +128,7 @@ Receive personalized recommendations for:
 
 ## 🏥 Medicine
 
-![Medicine](https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000)
+![Medicine](images/careerconnect-images/medicine.jpg)
 
 ### Career Paths
 
@@ -179,7 +145,7 @@ Receive personalized recommendations for:
 
 ## 🔐 Cybersecurity
 
-![Cybersecurity](https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1000)
+![Cybersecurity](images/careerconnect-images/cybersecurity.jpg)
 
 ### Career Paths
 
@@ -196,14 +162,14 @@ Receive personalized recommendations for:
 
 ## 📊 Data Science
 
-![Data Science](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000)
+![Data Science](images/careerconnect-images/data-science.jpg)
 
 ### Career Paths
 
 - Data Analyst
 - Data Scientist
-- ML Engineer
 - Data Engineer
+- Machine Learning Engineer
 
 ### Typical Journey
 
@@ -213,7 +179,7 @@ Receive personalized recommendations for:
 
 ## 🚀 Entrepreneurship
 
-![Entrepreneurship](https://images.unsplash.com/photo-1552664730-d307ca884978?w=1000)
+![Entrepreneurship](images/careerconnect-images/entrepreneurship.jpg)
 
 ### Career Paths
 
@@ -234,15 +200,13 @@ Receive personalized recommendations for:
 
 ✅ Learn from real experiences
 
+✅ Understand industry expectations
+
 ✅ Avoid common mistakes
 
-✅ Discover industry expectations
+✅ Discover growth opportunities
 
-✅ Understand required skills
-
-✅ Compare career paths
-
-✅ Build confidence in career decisions
+✅ Build confidence
 
 ---
 
@@ -254,53 +218,40 @@ Receive personalized recommendations for:
 
 ✅ Inspire future generations
 
-✅ Build professional impact
-
-✅ Create meaningful change
+✅ Create meaningful impact
 
 ---
 
-# 🔮 Future Enhancements
+# 🔮 Future Features
 
-### 🤝 Mentor Matching
-Connect students with professionals based on interests and goals.
+🤝 Mentor Matching
 
-### 🎙️ Live AMA Sessions
-Real-time discussions with industry experts.
+🎙️ Live AMA Sessions
 
-### 📊 Career Analytics
-Insights into skills, certifications, salary trends, and growth paths.
+📊 Career Analytics
 
-### 🏅 Reputation System
-Reward professionals for valuable contributions.
+🏅 Professional Reputation System
 
-### 📱 Mobile App
-Access roadmaps and discussions anytime, anywhere.
+📱 Mobile Applications
+
+🌐 Global Career Community
 
 ---
 
 # 🏆 Vision
 
-To become the world's largest repository of authentic career journeys, empowering students to make informed career decisions through real-world experiences shared by professionals globally.
+To become the world's largest collection of authentic career journeys and career roadmaps, empowering every student to make informed decisions through real-world experiences.
 
 ---
 
 # 🎯 Taglines
 
-### 🚀 Learn From Real Careers, Not Just Career Advice
+🚀 Learn From Real Careers, Not Just Career Advice
 
-### 🌟 Your Future Starts With Someone Else's Journey
+🌟 Your Future Starts With Someone Else's Journey
 
-### 🗺️ Discover The Paths Behind Successful Careers
+🗺️ Discover The Paths Behind Successful Careers
 
-### 💡 Real Stories. Real Careers. Better Decisions.
+💡 Real Stories. Real Careers. Better Decisions.
 
-### 🌍 Connecting Students With Global Career Wisdom
-
----
-
-## 📞 Join the Community
-
-**Whether you're a student seeking guidance or a professional willing to share your journey, CareerConnect is where experience becomes inspiration.**
-
-🚀 Start Exploring Careers Today!
+🌍 Connecting Students With Global Career Wisdom
