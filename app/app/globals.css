@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* next-themes toggles `.light` / `.dark` on <html>. The app is dark-first:
+   :root holds the dark palette so there's no light flash before hydration. */
+@custom-variant dark (&:where(:root:not(.light), .dark, .dark *));
+
+/* ----------------------------------------------------------------------
+   Sleek dark SaaS palette — indigo → violet → cyan, on near-black.
+---------------------------------------------------------------------- */
+:root,
+.dark {
+  --background: #070912;
+  --surface: #0f1322;
+  --surface-2: #161b2e;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-strong: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --foreground: #eceef7;
+  --muted: #9aa3ba;
+  --line: rgba(255, 255, 255, 0.08);
+
+  --primary: #6366f1; /* indigo  */
+  --primary-2: #8b5cf6; /* violet  */
+  --accent: #22d3ee; /* cyan    */
+  --ring: #6366f1;
+
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 20px 60px -20px rgba(99, 102, 241, 0.45);
+}
+
+.light {
+  --background: #f6f7fb;
+  --surface: #ffffff;
+  --surface-2: #eef0f7;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-strong: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(15, 19, 34, 0.08);
+  --foreground: #0f1322;
+  --muted: #5a647a;
+  --line: rgba(15, 19, 34, 0.08);
+
+  --primary: #6366f1;
+  --primary-2: #7c3aed;
+  --accent: #0891b2;
+  --ring: #6366f1;
+
+  --shadow-glow: 0 10px 40px -16px rgba(99, 102, 241, 0.35);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --color-glass-border: var(--glass-border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-2: var(--primary-2);
+  --color-accent: var(--accent);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+/* Slim, themed scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--foreground) 18%, transparent);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--primary) 60%, transparent);
+  background-clip: content-box;
+}
+
+/* ----------------------------------------------------------------------
+   Keyframes
+---------------------------------------------------------------------- */
+@keyframes float-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6%, -8%) scale(1.1); }
+  66% { transform: translate(-7%, 5%) scale(0.95); }
+}
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ----------------------------------------------------------------------
+   Component utilities
+---------------------------------------------------------------------- */
+@layer components {
+  .glass {
+    background-color: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+
+  .card {
+    position: relative;
+    background-color: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(120deg, var(--primary), var(--primary-2), var(--accent));
+    background-size: 200% 100%;
+    color: #fff;
+    box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--primary) 70%, transparent);
+    transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .btn-primary:hover {
+    background-position: 100% 0;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -12px color-mix(in srgb, var(--primary) 80%, transparent);
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+    transform: translateX(-100%);
+  }
+  .btn-primary:hover::after {
+    animation: shimmer 0.9s ease;
+  }
+
+  .btn-ghost {
+    border: 1px solid var(--glass-border);
+    background-color: var(--glass);
+    backdrop-filter: blur(10px);
+    transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-ghost:hover {
+    background-color: var(--glass-strong);
+    border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .gradient-text {
+    background-image: linear-gradient(120deg, var(--primary), var(--primary-2) 50%, var(--accent));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-pan 6s ease infinite;
+  }
+
+  .chip {
+    border: 1px solid var(--glass-border);
+    background-color: var(--glass);
+    backdrop-filter: blur(8px);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+
+  /* Shared form control */
+  .cr-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--glass-border);
+    background-color: color-mix(in srgb, var(--background) 60%, transparent);
+    padding: 0.65rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--foreground);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cr-input::placeholder {
+    color: color-mix(in srgb, var(--muted) 80%, transparent);
+  }
+  .cr-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,11 @@
+# The Next.js web app lives in /app and has its own .gitignore.
+
+# python (legacy Flask app)
+__pycache__/
+*.pyc
+*.db
+.venv/
+
+# misc
+.DS_Store
+*.pem
