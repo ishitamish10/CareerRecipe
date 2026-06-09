@@ -17,7 +17,7 @@ Some careers require:
 
 CareerRecipe reveals these ingredients through real-world stories shared by professionals.
 
-> 💡 "Learn the ingredients, follow the recipe, build your future."
+> 💡 "Learn the ingredients, follow the recipe, build your future. yo yo"
 
 ---
 
