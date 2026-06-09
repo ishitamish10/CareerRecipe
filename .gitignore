@@ -9,3 +9,7 @@ __pycache__/
 # misc
 .DS_Store
 *.pem
+
+/app/.next
+/app/node_modules
+/app/.env.local 
